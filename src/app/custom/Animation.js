@@ -7,7 +7,6 @@ export default class Animation {
     this._positionBtn = document.getElementById("position-button");
     this._stopBtn = document.getElementById("stop-button");
     this._tl = gsap.timeline({ repeat: -1 });
-    this._tl.pause();
   }
 
   listen() {
@@ -19,25 +18,25 @@ export default class Animation {
   async _scaleBtnClick() {
     this._tl.clear();
     this._tl.set(this._planets, { y: 0 });
-    this._tl.play();
     this._tl.to(this._planets, {
       scale: 0,
-      stagger: 0.1,
+      duration: 1,
       id: "positionStagger",
+      stagger: {
+        amount: 1,
+        repeat: -1,
+        yoyo: true,
+      },
     });
-    await this._tl.to(this._planets, { scale: 1, stagger: 0.1 });
   }
   async _positionBtnClick() {
     this._tl.clear();
     this._tl.set(this._planets, { scale: 1 });
-    this._tl.play();
     this._tl.to(this._planets, {
-      y: 200,
-      stagger: { each: 0.1, from: "edges", id: "scaleStagger" },
-    });
-    await this._tl.to(this._planets, {
-      y: 0,
-      stagger: { each: 0.1, from: "edges" },
+      y: 50,
+      duration: 1,
+      id: "scaleStagger",
+      stagger: { amount: 0.5, from: "edges", yoyo: true, repeat: -1 },
     });
   }
   _stopBtnClick() {
