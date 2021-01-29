@@ -6,7 +6,7 @@ export default class Animation {
     this._scaleBtn = document.getElementById("scale-button");
     this._positionBtn = document.getElementById("position-button");
     this._stopBtn = document.getElementById("stop-button");
-    this._tl = gsap.timeline({ repeat: -1 });
+    this._tl = gsap.timeline();
   }
 
   listen() {
@@ -16,8 +16,7 @@ export default class Animation {
   }
 
   async _scaleBtnClick() {
-    this._tl.clear();
-    this._tl.set(this._planets, { y: 0 });
+    this._reset();
     this._tl.to(this._planets, {
       scale: 0,
       duration: 1,
@@ -30,8 +29,7 @@ export default class Animation {
     });
   }
   async _positionBtnClick() {
-    this._tl.clear();
-    this._tl.set(this._planets, { scale: 1 });
+    this._reset();
     this._tl.to(this._planets, {
       y: 50,
       duration: 1,
@@ -40,7 +38,11 @@ export default class Animation {
     });
   }
   _stopBtnClick() {
+    this._reset();
+  }
+
+  _reset() {
+    this._tl.seek(0);
     this._tl.clear();
-    this._tl.set(this._planets, { scale: 1, y: 0 });
   }
 }
